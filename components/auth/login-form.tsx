@@ -9,6 +9,8 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '../ui/form';
 import { Input } from '../ui/input';
 import { Button } from '../ui/button';
+import { FormError } from '../form-error';
+import { FormSuccess } from '../form-success';
 
 export const LoginForm = () => {
   const form = useForm<z.infer<typeof LoginSchema>>({
@@ -53,6 +55,8 @@ export const LoginForm = () => {
                   </FormItem>
                 )} />
               </div>
+              <FormError message='This is an error' />
+              <FormSuccess message='This is a success' />
               <Button type='submit' className='w-full'>
                 Login
               </Button>
