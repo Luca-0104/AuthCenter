@@ -1,11 +1,36 @@
 import authConfig from "@/auth.config"
 import NextAuth from "next-auth"
+import { apiRoutePrefix, authRoutes, DEFAULT_LOGIN_REDIRECT, publicRoutes } from "./routes";
 
 const { auth } = NextAuth(authConfig);
 
 export default auth((req) => {
-  // req.auth
-})
+  const {nextUrl} = req;
+  const isLoggedIn = !!req.auth; // !! to convert it to bool
+
+  const isPublicRoute = publicRoutes.includes(nextUrl.pathname);
+  const isAuthRoute = authRoutes.includes(nextUrl.pathname);
+  const isApiAuthRoute = nextUrl.pathname.startsWith(apiRoutePrefix);
+  
+  // allow all the api auth route
+  if (isApiAuthRoute) return;
+
+  // if already logged in, they should not access the auth pages
+  if (isAuthRoute) {
+    if (isLoggedIn) {
+      return Response.redirect(new URL(DEFAULT_LOGIN_REDIRECT, nextUrl));
+    }
+    return;
+  }
+
+  // restrict the private page
+  if (!isPublicRoute && !isLoggedIn) {
+    return Response.redirect(new URL("/auth/login", nextUrl));
+  }
+
+  // public page or logged in
+  return;
+});
 
 // Optionally, don't invoke Middleware on some paths
 export const config = {
