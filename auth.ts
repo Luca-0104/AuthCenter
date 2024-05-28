@@ -5,6 +5,10 @@ import { db } from "./lib/db"
 
 
 export const { auth, handlers, signIn, signOut } = NextAuth({
+  // customize the route for auth errors
+  pages: {
+    signIn: "/auth/error", // this is fucking absurd! this is the route wil be redirected to after getting errors, even though the name of it is signIn
+  },
   events: {
     // update the emailVerified for OAuth register
     // because google or github already verified their emails
