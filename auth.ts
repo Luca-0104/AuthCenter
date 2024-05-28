@@ -2,6 +2,8 @@ import { PrismaAdapter } from "@auth/prisma-adapter"
 import NextAuth from "next-auth"
 import authConfig from "./auth.config"
 import { db } from "./lib/db"
+import { getUserById } from "./data/user"
+import { generateVerificationToken } from "./data/verification-token"
 
 
 export const { auth, handlers, signIn, signOut } = NextAuth({
@@ -21,6 +23,15 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
     }
   },
   callbacks: {
+    async signIn({ user, account, profile, email, credentials }) {
+      // we allow OAuth login without email verification
+      if (account?.provider !== "credentials") return true;
+      // do not allow credential login without email verification
+      const existingUser = await getUserById(user.id || "");
+      if (!existingUser || !existingUser.emailVerified) return false;
+
+      return true;
+    },
     session({ session, token }) {
       // get user id and role from token
       // then add them into session
