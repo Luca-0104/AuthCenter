@@ -7,6 +7,8 @@ import { DEFAULT_LOGIN_REDIRECT } from "@/routes";
 import { AuthError } from "next-auth";
 import { getUserByEmail } from "@/data/user";
 import { generateVerificationToken } from "@/data/verification-token";
+import { sendVerificationEmail } from "@/lib/email";
+import { error } from "console";
 
 export const login = async (values: z.infer<typeof LoginSchema>) => {
   const validatedFields = LoginSchema.safeParse(values);
@@ -23,8 +25,9 @@ export const login = async (values: z.infer<typeof LoginSchema>) => {
   if (!user.emailVerified) {
     // generate a new token for verification
     const verificationToken = await generateVerificationToken(user.email);
-    // TODO: send the email for verification token
-
+    if (!verificationToken) return {error: "Failed to generate verification token!"};
+    // send the email for verification token
+    await sendVerificationEmail(verificationToken.email, verificationToken.token);
     return {success: "Confirmation email sent!"};
   }
 
