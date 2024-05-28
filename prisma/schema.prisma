@@ -53,3 +53,12 @@ model Account {
 
   @@id([provider, providerAccountId])
 }
+
+model VerificationToke {
+  id      String   @id @default(cuid())
+  email   String
+  toekn   String   @unique
+  expires DateTime
+
+  @@unique([email, toekn])
+}
