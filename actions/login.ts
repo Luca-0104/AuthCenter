@@ -5,6 +5,8 @@ import * as z from "zod";
 import { signIn } from "@/auth";
 import { DEFAULT_LOGIN_REDIRECT } from "@/routes";
 import { AuthError } from "next-auth";
+import { getUserByEmail } from "@/data/user";
+import { generateVerificationToken } from "@/data/verification-token";
 
 export const login = async (values: z.infer<typeof LoginSchema>) => {
   const validatedFields = LoginSchema.safeParse(values);
@@ -13,9 +15,25 @@ export const login = async (values: z.infer<typeof LoginSchema>) => {
     return {error: "Invalid fields!"};
   }
 
+  const {email, password} = validatedFields.data;
+
+  // check if the user verified their email
+  const user = await getUserByEmail(email);
+  if (!user || !user.email || !user.password) return {error: "Email does not exist!"}
+  if (!user.emailVerified) {
+    // generate a new token for verification
+    const verificationToken = await generateVerificationToken(user.email);
+    // TODO: send the email for verification token
+
+    return {success: "Confirmation email sent!"};
+  }
+
+  // user can still bypass our verification checking here, and just using the api
+  // so the verification check should also be performed in the signIn call back to prevent this.
+  // The signIn call back is defined in the auth.config.ts
+
   // sign in the user using NextAuth
   // the credential checking logic was written in the "auth.config.ts" provider - credentials, this is weird
-  const {email, password} = validatedFields.data;
   try {
     await signIn("credentials", {
       email,
