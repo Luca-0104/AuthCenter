@@ -5,6 +5,17 @@ import { db } from "./lib/db"
 
 
 export const { auth, handlers, signIn, signOut } = NextAuth({
+  events: {
+    // update the emailVerified for OAuth register
+    // because google or github already verified their emails
+    // this event function is only triggered when using OAuth first time creating an account
+    async linkAccount({ user }){
+      await db.user.update({
+        where: { id: user.id },
+        data: { emailVerified: new Date() },
+      })
+    }
+  },
   callbacks: {
     session({ session, token }) {
       // get user id and role from token
