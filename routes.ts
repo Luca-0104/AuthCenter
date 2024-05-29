@@ -9,7 +9,8 @@ export const apiRoutePrefix = "/api/auth";
  * @type {string[]}
  */
 export const publicRoutes = [
-  "/"
+  "/",
+  "/auth/new-verification",
 ];
 
 /**
