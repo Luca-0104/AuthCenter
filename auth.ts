@@ -23,6 +23,8 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
     }
   },
   callbacks: {
+    // user can still bypass our verification checking in the server actions, and just using the api
+    // so the verification check should also be performed in the signIn call back (here) to prevent this.
     async signIn({ user, account, profile, email, credentials }) {
       // we allow OAuth login without email verification
       if (account?.provider !== "credentials") return true;
