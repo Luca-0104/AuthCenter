@@ -19,10 +19,13 @@ export const login = async (values: z.infer<typeof LoginSchema>) => {
 
   const {email, password} = validatedFields.data;
   
+  // check email
+  // If registered with OAuth, there will not be password
   const user = await getUserByEmail(email);
-  if (!user || !user.email || !user.password) return {error: "Email does not exist!"}
+  if (!user || !user.email) return {error: "Email does not exist!"};
+  if (!user.password) return {error: "This email was used with OAuth providers! (Not registered with credentials)"};
 
-  // TODO: check the password before sending verification email
+  // check the password before sending verification email
   const passwordMatch = await bcrypt.compare(password, user.password);
   if (!passwordMatch) return {error: "Wrong credentials!"};
 
