@@ -8,7 +8,7 @@ import { AuthError } from "next-auth";
 import { getUserByEmail } from "@/data/user";
 import { generateVerificationToken } from "@/data/verification-token";
 import { sendVerificationEmail } from "@/lib/email";
-import { error } from "console";
+import bcrypt from "bcryptjs";
 
 export const login = async (values: z.infer<typeof LoginSchema>) => {
   const validatedFields = LoginSchema.safeParse(values);
@@ -18,10 +18,15 @@ export const login = async (values: z.infer<typeof LoginSchema>) => {
   }
 
   const {email, password} = validatedFields.data;
-
-  // check if the user verified their email
+  
   const user = await getUserByEmail(email);
   if (!user || !user.email || !user.password) return {error: "Email does not exist!"}
+
+  // TODO: check the password before sending verification email
+  const passwordMatch = await bcrypt.compare(password, user.password);
+  if (!passwordMatch) return {error: "Wrong credentials!"};
+
+  // check if the user verified their email
   if (!user.emailVerified) {
     // generate a new token for verification
     const verificationToken = await generateVerificationToken(user.email);
