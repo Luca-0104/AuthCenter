@@ -1,5 +1,6 @@
 "use server";
 
+import { generatePasswordResetToken } from "@/data/passwordResetToken";
 import { getUserByEmail } from "@/data/user";
 import { ResetSchema } from "@/schemas";
 import * as z from "zod";
@@ -19,8 +20,9 @@ export const resetPassword = async (values: z.infer<typeof ResetSchema>) => {
   if (!existingUser.password) return {error: "This email was used with OAuth providers! (Not registered with credentials)"};
 
   // generate password reset token
-
-  // send the email with token
+  const passwordResetToken = await generatePasswordResetToken(existingUser.email);
   
+  // send the email with token
 
+  return {success: "The password reset email sent!"};
 }

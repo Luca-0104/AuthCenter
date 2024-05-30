@@ -32,8 +32,8 @@ export const ResetForm = () => {
 
     startTransition(() => {
       resetPassword(values).then((data) => {
-        // setError(data?.error);
-        // setSuccess(data?.success);
+        setError(data?.error);
+        setSuccess(data?.success);
       })
     });
   };
