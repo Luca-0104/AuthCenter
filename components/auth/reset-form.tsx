@@ -15,7 +15,7 @@ import { login } from '@/actions/login';
 import { useTransition } from 'react';
 import Link from 'next/link';
 
-export const LoginForm = () => {
+export const ResetForm = () => {
   const [isPending, startTransition] = useTransition();
   const [error, setError] = useState<string | undefined>("");
   const [success, setSuccess] = useState<string | undefined>("");
