@@ -13,6 +13,7 @@ import { FormError } from '../form-error';
 import { FormSuccess } from '../form-success';
 import { useTransition } from 'react';
 import { useSearchParams } from 'next/navigation';
+import { resetPassword } from '@/actions/reset-password';
 
 // PasswordResetForm is the form requires two password to update the user password
 // This form can be accessed by users by clicking in the link in the email they receive
@@ -35,10 +36,11 @@ export const PasswordResetForm = () => {
     setSuccess("");
 
     startTransition(() => {
-      // resetPassword(values).then((data) => {
-      //   setError(data?.error);
-      //   setSuccess(data?.success);
-      // })
+      resetPassword(values, passwordResetToken)
+        .then((data) => {
+          setError(data?.error);
+          setSuccess(data?.success);
+      })
     });
   };
 
@@ -55,7 +57,7 @@ export const PasswordResetForm = () => {
               <FormItem>
                 <FormLabel>New Password</FormLabel>
                 <FormControl>
-                  <Input {...field} placeholder='******' disabled={isPending}/>
+                  <Input {...field} placeholder='******' type='password' disabled={isPending}/>
                 </FormControl>
                 <FormMessage />
               </FormItem>
