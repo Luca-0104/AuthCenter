@@ -1,10 +1,16 @@
 import * as z from "zod";
 
+export const ResetPasswordSchema = z.object({
+  password: z.string().min(6, {
+    message: "New password should longer than 6 characters"
+  }),
+})
+
 export const ResetSchema = z.object({
   email: z.string().email({
     message: "Email is required"
   }),
-})
+});
 
 export const LoginSchema = z.object({
   email: z.string().email({

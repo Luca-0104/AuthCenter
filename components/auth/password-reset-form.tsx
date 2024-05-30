@@ -3,7 +3,7 @@
 import React, { useState } from 'react'
 import { CardWrapper } from './card-wrapper'
 import * as z from "zod";
-import { ResetSchema } from '@/schemas';
+import { ResetPasswordSchema } from '@/schemas';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '../ui/form';
@@ -14,45 +14,46 @@ import { FormSuccess } from '../form-success';
 import { useTransition } from 'react';
 import { resetPassword } from '@/actions/resetPassword';
 
-// ResetForm is the form requires the email to get the password reset email
-export const ResetForm = () => {
+// PasswordResetForm is the form requires two password to update the user password
+// This form can be accessed by users by clicking in the link in the email they receive
+export const PasswordResetForm = () => {
   const [isPending, startTransition] = useTransition();
   const [error, setError] = useState<string | undefined>("");
   const [success, setSuccess] = useState<string | undefined>("");
-  const form = useForm<z.infer<typeof ResetSchema>>({
-    resolver: zodResolver(ResetSchema),
+  const form = useForm<z.infer<typeof ResetPasswordSchema>>({
+    resolver: zodResolver(ResetPasswordSchema),
     defaultValues: {
-      email: ""
+      password: ""
     }
   });
 
 
-  const onSubmit = (values: z.infer<typeof ResetSchema>) => {
+  const onSubmit = (values: z.infer<typeof ResetPasswordSchema>) => {
     setError("");
     setSuccess("");
 
     startTransition(() => {
-      resetPassword(values).then((data) => {
-        setError(data?.error);
-        setSuccess(data?.success);
-      })
+      // resetPassword(values).then((data) => {
+      //   setError(data?.error);
+      //   setSuccess(data?.success);
+      // })
     });
   };
 
   return (
     <CardWrapper 
-      headerLabel="Reset your password 🔞"
+      headerLabel="Set your new password 🔞"
       backButtonLabel="Back to login?"
       backButtonHref="/auth/login"
     >
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-6'>
           <div className='space-y-4'>
-            <FormField control={form.control} name="email" render={({ field }) => (
+            <FormField control={form.control} name="password" render={({ field }) => (
               <FormItem>
-                <FormLabel>Email</FormLabel>
+                <FormLabel>New Password</FormLabel>
                 <FormControl>
-                  <Input {...field} placeholder='youremail@gmail.com' type='email' disabled={isPending}/>
+                  <Input {...field} placeholder='******' disabled={isPending}/>
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -61,7 +62,7 @@ export const ResetForm = () => {
           <FormError message={error} />
           <FormSuccess message={success} />
           <Button type='submit' className='w-full' disabled={isPending}>
-            Send reset email
+            Reset Password
           </Button>
         </form>
       </Form>
