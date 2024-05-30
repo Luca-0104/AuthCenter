@@ -12,10 +12,10 @@ import { Button } from '../ui/button';
 import { FormError } from '../form-error';
 import { FormSuccess } from '../form-success';
 import { useTransition } from 'react';
-import { resetPassword } from '@/actions/resetPassword';
+import { resetPasswordRequest } from '@/actions/reset-password-request';
 
-// ResetForm is the form requires the email to get the password reset email
-export const ResetForm = () => {
+// PasswordResetRequestForm is the form requires the email to get the password reset email
+export const PasswordResetRequestForm = () => {
   const [isPending, startTransition] = useTransition();
   const [error, setError] = useState<string | undefined>("");
   const [success, setSuccess] = useState<string | undefined>("");
@@ -32,7 +32,7 @@ export const ResetForm = () => {
     setSuccess("");
 
     startTransition(() => {
-      resetPassword(values).then((data) => {
+      resetPasswordRequest(values).then((data) => {
         setError(data?.error);
         setSuccess(data?.success);
       })

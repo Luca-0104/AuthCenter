@@ -12,11 +12,14 @@ import { Button } from '../ui/button';
 import { FormError } from '../form-error';
 import { FormSuccess } from '../form-success';
 import { useTransition } from 'react';
-import { resetPassword } from '@/actions/resetPassword';
+import { useSearchParams } from 'next/navigation';
 
 // PasswordResetForm is the form requires two password to update the user password
 // This form can be accessed by users by clicking in the link in the email they receive
 export const PasswordResetForm = () => {
+  const searchParams = useSearchParams();
+  const passwordResetToken = searchParams.get("token");
+
   const [isPending, startTransition] = useTransition();
   const [error, setError] = useState<string | undefined>("");
   const [success, setSuccess] = useState<string | undefined>("");
@@ -26,7 +29,6 @@ export const PasswordResetForm = () => {
       password: ""
     }
   });
-
 
   const onSubmit = (values: z.infer<typeof ResetPasswordSchema>) => {
     setError("");

@@ -66,7 +66,7 @@ export const LoginForm = () => {
                   <Input {...field} placeholder="******" type='password' disabled={isPending}/>
                 </FormControl>
                 <Button size={"sm"} variant="link" className='px-0 font-normal' asChild>
-                  <Link href="/auth/reset">
+                  <Link href="/auth/reset-password-request">
                     Forget your password?
                   </Link>
                 </Button>

@@ -6,7 +6,7 @@ import { sendPasswordResetEmail } from "@/lib/email";
 import { ResetSchema } from "@/schemas";
 import * as z from "zod";
 
-export const resetPassword = async (values: z.infer<typeof ResetSchema>) => {
+export const resetPasswordRequest = async (values: z.infer<typeof ResetSchema>) => {
   const validatedFields = ResetSchema.safeParse(values);
 
   if (!validatedFields.success) {
