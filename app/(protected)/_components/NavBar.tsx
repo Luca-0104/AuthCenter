@@ -1,5 +1,6 @@
 "use client";
 
+import { UserButton } from "@/components/auth/UserButton";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -7,7 +8,7 @@ import { usePathname } from "next/navigation";
 export const NavBar = () => {
   const pathname = usePathname();
   return (
-    <div className="bg-secondary w-[600px] rounded-xl p-4 shadow-sm flex items-center justify-between">
+    <div className="bg-secondary w-[600px] rounded-xl p-4 my-6 shadow-sm flex items-center justify-between">
       <div className="space-x-2">
         <Button asChild variant={pathname === "/server" ? "default" : "outline"}>
           <Link href="/server">
@@ -30,7 +31,7 @@ export const NavBar = () => {
           </Link>
         </Button>
       </div>
-      <p>UserBTN</p>
+      <UserButton />
     </div>
   )
 }

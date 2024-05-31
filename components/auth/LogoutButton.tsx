@@ -1,4 +1,4 @@
-import { logout } from '@/actions/logout';
+import { signOut } from 'next-auth/react';
 import React from 'react'
 
 interface Props {
@@ -7,7 +7,7 @@ interface Props {
 
 export const LogoutButton = ({ children }: Props) => {
   const onClick = () => {
-    logout();
+    signOut();
   };
   return (
     <span onClick={onClick} className='cursor-pointer'>
