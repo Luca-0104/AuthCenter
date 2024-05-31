@@ -9,7 +9,9 @@ import { getUserByEmail } from "@/data/user";
 import { generateVerificationToken } from "@/data/verification-token";
 import { sendTwoFactorTokenEmail, sendVerificationEmail } from "@/lib/email";
 import bcrypt from "bcryptjs";
-import { generateTwoFactorToken } from "@/data/two-factor-token";
+import { generateTwoFactorToken, getTwoFactorTokenByEmail, getTwoFactorTokenByToken } from "@/data/two-factor-token";
+import { db } from "@/lib/db";
+import { getTwoFactorConfirmationByUserId } from "@/data/two-factor-confirmation";
 
 export const login = async (values: z.infer<typeof LoginSchema>) => {
   const validatedFields = LoginSchema.safeParse(values);
@@ -18,7 +20,7 @@ export const login = async (values: z.infer<typeof LoginSchema>) => {
     return {error: "Invalid fields!"};
   }
 
-  const {email, password} = validatedFields.data;
+  const {email, password, code} = validatedFields.data;
   
   // check email
   // If registered with OAuth, there will not be password
@@ -46,9 +48,41 @@ export const login = async (values: z.infer<typeof LoginSchema>) => {
 
   // send two factor verification email if user is enabled this
   if (user.isTwoFactorEnabled) {
-    const twoFactorToken = await generateTwoFactorToken(user.email);
-    await sendTwoFactorTokenEmail(twoFactorToken.email, twoFactorToken.token);
-    return { IsTwoFactor: true }
+    // if have the code, this means user clicked on the confirm button, we need to verify the 2FA code here
+    if (code) {
+      const existing2FAToken = await getTwoFactorTokenByEmail(user.email);
+      if (!existing2FAToken || existing2FAToken.token !== code) return {error: "Invalid 2FA code!"};
+      // check expiration
+      if (new Date(existing2FAToken.expires) < new Date()) return {error: "Code has expired!"};
+      
+      // if everything is ok, just remove the token from database
+      await db.twoFactorToken.delete({
+        where: {id: existing2FAToken.id}
+      });
+
+      // Generate the 2FA confirmation record in the db, 
+      // therefore, this will be verified in the signIn callback latter.
+      // we will delete the exiting one if there is one
+      const existingTwoFactorConfirmation = await getTwoFactorConfirmationByUserId(user.id);
+      if (existingTwoFactorConfirmation) {
+        await db.twoFactorConfirmation.delete({
+          where: {
+            id: existingTwoFactorConfirmation.id
+          }
+        });
+      }
+      await db.twoFactorConfirmation.create({
+        data: {
+          userId: user.id,
+        }
+      });
+
+    } else {
+      // if do not have the code, this means user just clicked on the login button, we need to send them the 2FA code
+      const twoFactorToken = await generateTwoFactorToken(user.email);
+      await sendTwoFactorTokenEmail(twoFactorToken.email, twoFactorToken.token);
+      return { IsTwoFactor: true }
+    }
   }
 
   // sign in the user using NextAuth
