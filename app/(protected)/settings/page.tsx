@@ -1,25 +1,28 @@
-import { auth, signOut } from '@/auth';
+"use client";
 
+import { signOut, useSession } from "next-auth/react";
 
-const Settings = async () => {
-  const session = await auth();
+const Settings = () => {
+  const session = useSession({
+    required: true,
+    onUnauthenticated() {
+      // there is a weird bug, if we do not reload the page, the session can not be get, but the session is indeed already in the cookies of the browser
+      location.reload();
+    }
+  });
+  
+  const onClick = () => {
+    signOut();
+  };
 
   return (
-    <>
+    <div>
       <div>{JSON.stringify(session)}</div>
-      <form action={async () => {
-        "use server";
-        // have to use redirectTo, there is a bug with auth.js or Response.redirect
-        // if do not use redirectTo, it will render the login page but still remain the /settings url
-        await signOut({redirectTo: "/auth/login"});
-      }}>
-        <button type='submit'>
-          sign out
-        </button>
-      </form>
-    </>
-
+      <button onClick={onClick} >
+        sign out
+      </button>
+    </div>
   )
 }
 
-export default Settings
+export default Settings;

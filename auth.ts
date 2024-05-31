@@ -3,11 +3,13 @@ import NextAuth from "next-auth"
 import authConfig from "./auth.config"
 import { db } from "./lib/db"
 import { getUserById } from "./data/user"
-import { generateVerificationToken } from "./data/verification-token"
 import { getTwoFactorConfirmationByUserId } from "./data/two-factor-confirmation"
 
 
-export const { auth, handlers, signIn, signOut } = NextAuth({
+export const { handlers, signIn, signOut, auth } = NextAuth({
+  ...authConfig,
+  adapter: PrismaAdapter(db),
+  session: { strategy: "jwt" },
   // customize the route for auth errors
   pages: {
     signIn: "/auth/error", // this is fucking absurd! this is the route wil be redirected to after getting errors, even though the name of it is signIn
@@ -43,7 +45,7 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
       }
       return true;
     },
-    session({ session, token }) {
+    async session({ session, token }) {
       // get user id and role from token
       // then add them into session
       // therefore, they can be accessed from anywhere else
@@ -57,7 +59,7 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
 
       return session;
     },
-    jwt({ token, user }) {
+    async jwt({ token, user }) {
       // add user id and role into the token
       if (!user || !token || !token.sub) return token;
       token.role = user.role;
@@ -65,7 +67,4 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
       return token;
     },
   },
-  adapter: PrismaAdapter(db),
-  session: { strategy: "jwt" },
-  ...authConfig,
 })
