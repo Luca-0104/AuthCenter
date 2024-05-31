@@ -16,8 +16,7 @@ const Settings = () => {
   };
 
   return (
-    <div>
-      <div>{JSON.stringify(session)}</div>
+    <div className="bg-white p-10 rounded-xl">
       <button onClick={onClick} >
         sign out
       </button>
