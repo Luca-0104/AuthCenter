@@ -1,5 +1,6 @@
 "use client";
 
+import { LogoutButton } from "@/components/auth/LogoutButton";
 import { signOut, useSession } from "next-auth/react";
 
 const Settings = () => {
@@ -17,9 +18,7 @@ const Settings = () => {
 
   return (
     <div className="bg-white p-10 rounded-xl">
-      <button onClick={onClick} >
-        sign out
-      </button>
+      <LogoutButton>Log out</LogoutButton>
     </div>
   )
 }
