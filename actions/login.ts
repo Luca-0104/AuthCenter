@@ -7,8 +7,9 @@ import { DEFAULT_LOGIN_REDIRECT } from "@/routes";
 import { AuthError } from "next-auth";
 import { getUserByEmail } from "@/data/user";
 import { generateVerificationToken } from "@/data/verification-token";
-import { sendVerificationEmail } from "@/lib/email";
+import { sendTwoFactorTokenEmail, sendVerificationEmail } from "@/lib/email";
 import bcrypt from "bcryptjs";
+import { generateTwoFactorToken } from "@/data/two-factor-token";
 
 export const login = async (values: z.infer<typeof LoginSchema>) => {
   const validatedFields = LoginSchema.safeParse(values);
@@ -42,6 +43,13 @@ export const login = async (values: z.infer<typeof LoginSchema>) => {
   // user can still bypass our verification checking here, and just using the api
   // so the verification check should also be performed in the signIn call back to prevent this.
   // The signIn call back is defined in the auth.config.ts
+
+  // send two factor verification email if user is enabled this
+  if (user.isTwoFactorEnabled) {
+    const twoFactorToken = await generateTwoFactorToken(user.email);
+    await sendTwoFactorTokenEmail(twoFactorToken.email, twoFactorToken.token);
+    return { IsTwoFactor: true }
+  }
 
   // sign in the user using NextAuth
   // the credential checking logic was written in the "auth.config.ts" provider - credentials, this is weird

@@ -4,6 +4,7 @@ import authConfig from "./auth.config"
 import { db } from "./lib/db"
 import { getUserById } from "./data/user"
 import { generateVerificationToken } from "./data/verification-token"
+import { getTwoFactorConfirmationByUserId } from "./data/two-factor-confirmation"
 
 
 export const { auth, handlers, signIn, signOut } = NextAuth({
@@ -31,7 +32,15 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
       // do not allow credential login without email verification
       const existingUser = await getUserById(user.id || "");
       if (!existingUser || !existingUser.emailVerified) return false;
-
+      // add 2FA check
+      if (existingUser.isTwoFactorEnabled) {
+        const existingTwoFactorConfirmation = await getTwoFactorConfirmationByUserId(existingUser.id);
+        if (!existingTwoFactorConfirmation) return false;
+        // if exist, we will delete it as it is used this time
+        await db.twoFactorConfirmation.delete({
+          where: { id: existingTwoFactorConfirmation.id }
+        });
+      }
       return true;
     },
     session({ session, token }) {
