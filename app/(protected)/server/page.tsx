@@ -1,17 +1,18 @@
-import { auth } from '@/auth';
 import { UserInfo } from '@/components/user-info';
 import { currentUser } from '@/lib/auth';
-import React from 'react'
 
 /**
  * Fetch session on "server" side
  */
-const Server = async () => {
+const ServerPage = async () => {
   const user = await currentUser();
 
   return (
-    <UserInfo user={user} label={"🔞 Server Component"}/>
+    <UserInfo 
+      user={user} 
+      label={"🔞 Server Component ⚧"}
+      description="Following data comes from the session fetched on the server side."/>
   )
-}
+};
 
-export default Server
+export default ServerPage;

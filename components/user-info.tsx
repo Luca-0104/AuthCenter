@@ -13,14 +13,16 @@ import { Badge } from './ui/badge'
 
 interface Props {
   user?: ExtendedUser,
-  label: string
+  label: string,
+  description: string,
 }
 
-export const UserInfo = ({ user, label }: Props) => {
+export const UserInfo = ({ user, label, description }: Props) => {
   return (
     <Card className='w-[600px] shadow-md'>
       <CardHeader className='text-center text-2xl font-semibold'>
         <p>{label}</p>
+        <CardDescription>{description}</CardDescription>
       </CardHeader>
       <CardContent className='space-y-4'>
         <div className="space-x-4 rounded-md border p-4 w-full flex items-center justify-between">
