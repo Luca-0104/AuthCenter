@@ -1,5 +1,6 @@
 "use client";
 
+import { admin } from '@/actions/admin';
 import { RoleGate } from '@/components/auth/RoleGate';
 import { FormSuccess } from '@/components/form-success';
 import { Button } from '@/components/ui/button';
@@ -8,6 +9,17 @@ import { UserRole } from '@prisma/client';
 import { toast } from 'sonner';
 
 const AdminPage = () => {
+  const handleOnServerActionClick = () => {
+    admin()
+      .then((data) => {
+        if (data.error) {
+          toast.error("Forbidden Server Action! 🚫🔞🚭🚷🈲⚤🖕");
+        }
+        if (data.success) {
+          toast.success("You are allowed to access! 💖❤️❤️💗💞💘");
+        }
+      })
+  }
   const handleOnApiRouteClick = () => {
     fetch("/api/admin")
       .then((response) => {
@@ -42,7 +54,7 @@ const AdminPage = () => {
           <p className='text-sm font-medium'>
             🚱 Admin-only Server Action
           </p>
-          <Button>
+          <Button onClick={handleOnServerActionClick}>
             Click to test
           </Button>
         </div>
