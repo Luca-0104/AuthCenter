@@ -25,7 +25,14 @@ export default auth((req) => {
 
   // restrict the private page
   if (!isPublicRoute && !isLoggedIn) {
-    return Response.redirect(new URL("/auth/login", nextUrl));
+    // get the url that the user wants to access
+    let callbackUrl = nextUrl.pathname;
+    if (nextUrl.search) {
+      callbackUrl += nextUrl.search;
+    }
+    const encodedUrl = encodeURIComponent(callbackUrl);
+
+    return Response.redirect(new URL(`/auth/login?callbackUrl=${encodedUrl}`, nextUrl));
   }
 
   // public page or logged in

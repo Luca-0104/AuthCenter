@@ -14,8 +14,11 @@ import { FormSuccess } from '../form-success';
 import { login } from '@/actions/login';
 import { useTransition } from 'react';
 import Link from 'next/link';
+import { useSearchParams } from 'next/navigation';
 
 export const LoginForm = () => {
+  const searchParams = useSearchParams();
+  const callbackUrl = searchParams.get("callbackUrl");
   const [isPending, startTransition] = useTransition();
   const [error, setError] = useState<string | undefined>("");
   const [success, setSuccess] = useState<string | undefined>("");
@@ -34,7 +37,7 @@ export const LoginForm = () => {
     setSuccess("");
 
     startTransition(() => {
-      login(values)
+      login(values, callbackUrl)
         .then((data) => {
           if (data?.IsTwoFactor) {
             setShowTwoFactor(true);
