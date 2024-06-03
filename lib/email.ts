@@ -5,7 +5,7 @@ const domain = process.env.NEXT_PUBLIC_URL
 
 export const sendTwoFactorTokenEmail = async (email: string, token: string) => {
   const { data, error } = await resend.emails.send({
-    from: 'authcenter@resend.dev',
+    from: 'non-reply@auth.liuzhelucas.com',
     to: [email],
     subject: '[Auth Center] Your 2FA code ⚤',
     html: `<p>Here is your 2FA code: ${token}</p>`
@@ -15,7 +15,7 @@ export const sendTwoFactorTokenEmail = async (email: string, token: string) => {
 export const sendPasswordResetEmail = async (email: string, token: string) => {
   const confirmLink = `${domain}/auth/reset-password?token=${token}`;
   const { data, error } = await resend.emails.send({
-    from: 'authcenter@resend.dev',
+    from: 'non-reply@auth.liuzhelucas.com',
     to: [email],
     subject: '[Auth Center] Reset your password ⚤',
     html: `<p>Click <a href="${confirmLink}">here</a> to reset your password.</p>`
@@ -25,7 +25,7 @@ export const sendPasswordResetEmail = async (email: string, token: string) => {
 export const sendVerificationEmail = async (email: string, token: string) => {
   const confirmLink = `${domain}/auth/new-verification?token=${token}`;
   const { data, error } = await resend.emails.send({
-    from: 'authcenter@resend.dev',
+    from: 'non-reply@auth.liuzhelucas.com',
     to: [email],
     subject: '[Auth Center] Confirm Your Email',
     html: `<p>Click <a href="${confirmLink}">here</a> to confirm email.</p>`
