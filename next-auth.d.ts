@@ -5,7 +5,7 @@ export type ExtendedUser = DefaultSession["user"] & {
   role: UserRole 
   isTwoFactorEnabled: Boolean
 };
- 
+
 declare module "next-auth" {
   /**
    * Returned by `auth`, `useSession`, `getSession` and received as a prop on the `SessionProvider` React Context
