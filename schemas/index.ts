@@ -1,5 +1,9 @@
 import * as z from "zod";
 
+export const SettingsSchema = z.object({
+  name: z.optional(z.string()),
+})
+
 export const ResetPasswordSchema = z.object({
   password: z.string().min(6, {
     message: "New password should longer than 6 characters"
