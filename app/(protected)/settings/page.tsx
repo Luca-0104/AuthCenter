@@ -1,25 +1,35 @@
 "use client";
 
-import { LogoutButton } from "@/components/auth/LogoutButton";
-import { signOut, useSession } from "next-auth/react";
+import { setting } from "@/actions/settings";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { useTransition } from "react";
+
 
 const Settings = () => {
-  const session = useSession({
-    required: true,
-    onUnauthenticated() {
-      // there is a weird bug, if we do not reload the page, the session can not be get, but the session is indeed already in the cookies of the browser
-      location.reload();
-    }
-  });
+  const [isPending, startTransition] = useTransition();
   
-  const onClick = () => {
-    signOut();
+  const handleOnClick = () => {
+    startTransition(() => {
+      setting({
+        name: "New Name!",
+      });
+    });
   };
 
   return (
-    <div className="bg-white p-10 rounded-xl">
-      <LogoutButton>Log out</LogoutButton>
-    </div>
+    <Card>
+      <CardHeader className="w-[600px]">
+        <p className="text-2xl font-semibold text-center">
+          🍽️ Settings
+        </p>
+      </CardHeader>
+      <CardContent>
+        <Button disabled={isPending} onClick={handleOnClick}>
+          Update
+        </Button>
+      </CardContent>
+    </Card>
   )
 }
 
