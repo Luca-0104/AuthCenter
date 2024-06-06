@@ -33,6 +33,7 @@ model User {
   updatedAt     DateTime  @updatedAt
   isTwoFactorEnabled Boolean @default(true)
   twoFactorConfirmation TwoFactorConfirmation?
+  isOAuth Boolean @default(false)
 }
 
 model Account {
