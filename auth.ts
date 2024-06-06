@@ -61,15 +61,42 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         session.user.isTwoFactorEnabled = token.isTwoFactorEnabled;
       }
 
+      if (token.name && session.user) {
+        session.user.name = token.name;
+      }
+
+      if (token.email && session.user) {
+        session.user.email = token.email;
+      }
+
       return session;
     },
-    async jwt({ token, user }) {
+    // async jwt({ token, user }) {  // there is the next auth bug with jwt we can not use user in the params, otherwise the jwt callback func will not be called when updating the user settings.
+    async jwt({ token }) {
       // add user id and role into the token
-      if (!user || !token || !token.sub) return token;
-      token.role = user.role;
-      token.sub = user.id;
-      token.isTwoFactorEnabled = user.isTwoFactorEnabled;
+      // if (!user || !token || !token.sub) return token;
+      // token.name = user.name;
+      // token.email = user.email;
+      // token.role = user.role;
+      // token.sub = user.id;
+
+      // console.log("jwt user: ");
+      
+      // token.isTwoFactorEnabled = user.isTwoFactorEnabled;
+      // return token;
+      
+      if (!token.sub) return token;
+
+      const existingUser = await getUserById(token.sub);
+      if (!existingUser) return token;
+
+      token.name = existingUser.name;
+      token.email = existingUser.email;
+      token.role = existingUser.role;
+      token.isTwoFactorEnabled = existingUser.isTwoFactorEnabled;
+
       return token;
+
     },
   },
 })

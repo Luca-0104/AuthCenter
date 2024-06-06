@@ -3,16 +3,20 @@
 import { setting } from "@/actions/settings";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { useSession } from "next-auth/react";
 import { useTransition } from "react";
 
 
 const Settings = () => {
+  const {update} = useSession();
   const [isPending, startTransition] = useTransition();
   
   const handleOnClick = () => {
     startTransition(() => {
       setting({
-        name: "New Name!",
+        name: "New Name5!",
+      }).then(() => {
+        update();
       });
     });
   };
