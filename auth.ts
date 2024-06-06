@@ -4,6 +4,7 @@ import authConfig from "./auth.config"
 import { db } from "./lib/db"
 import { getUserById } from "./data/user"
 import { getTwoFactorConfirmationByUserId } from "./data/two-factor-confirmation"
+import { getAccountByUserId } from "./data/accounts"
 
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
@@ -69,6 +70,10 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         session.user.email = token.email;
       }
 
+      if (token.isOAuth && session.user) {
+        session.user.isOAuth = token.isOAuth;
+      }
+
       return session;
     },
     // async jwt({ token, user }) {  // there is the next auth bug with jwt we can not use user in the params, otherwise the jwt callback func will not be called when updating the user settings.
@@ -89,11 +94,13 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 
       const existingUser = await getUserById(token.sub);
       if (!existingUser) return token;
-
+      const existingAccount = await getAccountByUserId(existingUser.id);
+      
       token.name = existingUser.name;
       token.email = existingUser.email;
       token.role = existingUser.role;
       token.isTwoFactorEnabled = existingUser.isTwoFactorEnabled;
+      token.isOAuth = !!existingAccount;
 
       return token;
 
