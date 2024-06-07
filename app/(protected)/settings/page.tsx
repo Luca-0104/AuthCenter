@@ -12,6 +12,8 @@ import { useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 import { useCurrentUser } from "@/hooks/use-current-user";
+import { FormSuccess } from "@/components/form-success";
+import { FormError } from "@/components/form-error";
 
 const Settings = () => {
   const user = useCurrentUser();
@@ -66,6 +68,8 @@ const Settings = () => {
                 </FormControl>
               </FormItem>
             )} />
+            <FormSuccess message={success} />
+            <FormError message={error} />
             <Button type="submit">Save</Button>
           </form>
         </Form>
