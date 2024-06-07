@@ -74,6 +74,10 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         session.user.isOAuth = token.isOAuth;
       }
 
+      // This is so Fucking weird! If we do not log here, the server side cannot get the updated session
+      // This ! is ! so ! fucking ! weird!!!!
+      // console.log("session session: ", session);
+
       return session;
     },
     // async jwt({ token, user }) {  // there is the next auth bug with jwt we can not use user in the params, otherwise the jwt callback func will not be called when updating the user settings.

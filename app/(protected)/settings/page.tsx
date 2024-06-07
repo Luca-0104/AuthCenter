@@ -14,7 +14,7 @@ const Settings = () => {
   const handleOnClick = () => {
     startTransition(() => {
       setting({
-        name: "New Name5!",
+        name: "New Name1!",
       }).then(() => {
         update();
       });
