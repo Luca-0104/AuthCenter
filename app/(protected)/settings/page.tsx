@@ -27,10 +27,10 @@ import { Switch } from "@/components/ui/switch";
 
 const Settings = () => {
   const user = useCurrentUser();
-
+  
   const [error, setError] = useState<string | undefined>();
   const [success, setSuccess] = useState<string | undefined>();
-
+  
   const { update } = useSession();
   const [isPending, startTransition] = useTransition();
 
