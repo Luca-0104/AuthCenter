@@ -6,8 +6,9 @@ import { currentUser } from "@/lib/auth";
 import { db } from "@/lib/db";
 import { sendVerificationEmail } from "@/lib/email";
 import { SettingsSchema } from "@/schemas";
-import { error } from "console";
 import * as z from "zod";
+import bcrypt from "bcryptjs";
+
 
 export const setting = async (values: z.infer<typeof SettingsSchema>) => {
   // get user from session
@@ -37,6 +38,18 @@ export const setting = async (values: z.infer<typeof SettingsSchema>) => {
     if (!verificationToken) return { error: "Something went wrong with the token, try again later!" };
     await sendVerificationEmail(values.email, verificationToken.token);
     return { success: "Verification email sent!" };
+  }
+
+  // check if the password changed
+  if (values.password && values.newPassword && dbUser.password) {
+    const psdMatch = await bcrypt.compare(values.password, dbUser.password);
+    if (!psdMatch) {
+      return { error: "Old password does not match!" };
+    }
+    // hash the new password
+    const hashedPassword = await bcrypt.hash(values.newPassword, 10);
+    values.password = hashedPassword;
+    values.newPassword = undefined;
   }
 
   await db.user.update({

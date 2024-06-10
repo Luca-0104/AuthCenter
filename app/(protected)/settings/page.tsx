@@ -99,7 +99,7 @@ const Settings = () => {
                   <FormItem>
                     <FormLabel>Password</FormLabel>
                     <FormControl>
-                      <Input {...field} placeholder="******" disabled={isPending} />
+                      <Input {...field} placeholder="******" disabled={isPending} type="password"/>
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -108,7 +108,7 @@ const Settings = () => {
                   <FormItem>
                     <FormLabel>New Password</FormLabel>
                     <FormControl>
-                      <Input {...field} placeholder="******" disabled={isPending} />
+                      <Input {...field} placeholder="******" disabled={isPending} type="password" />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
