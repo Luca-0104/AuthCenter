@@ -1,9 +1,12 @@
 "use server";
 
-import { getUserById } from "@/data/user";
+import { getUserByEmail, getUserById } from "@/data/user";
+import { generateVerificationToken } from "@/data/verification-token";
 import { currentUser } from "@/lib/auth";
 import { db } from "@/lib/db";
+import { sendVerificationEmail } from "@/lib/email";
 import { SettingsSchema } from "@/schemas";
+import { error } from "console";
 import * as z from "zod";
 
 export const setting = async (values: z.infer<typeof SettingsSchema>) => {
@@ -21,6 +24,19 @@ export const setting = async (values: z.infer<typeof SettingsSchema>) => {
     values.password = undefined;
     values.newPassword = undefined;
     values.isTwoFactorEnabled = undefined;
+  }
+
+  // check if the email changed
+  if (values.email && values.email !== user.email) {
+    const existingUser = await getUserByEmail(values.email);
+    if (existingUser && existingUser.id !== user.id) {
+      return { error: "Email already in use!" };
+    }
+    // send verification token for changing email
+    const verificationToken = await generateVerificationToken(values.email);
+    if (!verificationToken) return { error: "Something went wrong with the token, try again later!" };
+    await sendVerificationEmail(values.email, verificationToken.token);
+    return { success: "Verification email sent!" };
   }
 
   await db.user.update({
