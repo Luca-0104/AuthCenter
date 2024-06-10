@@ -26,7 +26,7 @@ import { Switch } from "@/components/ui/switch";
 
 
 const Settings = () => {
-  const user = useCurrentUser();
+  const user = useCurrentUser(true);
   
   const [error, setError] = useState<string | undefined>();
   const [success, setSuccess] = useState<string | undefined>();
