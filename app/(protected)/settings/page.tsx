@@ -84,40 +84,44 @@ const Settings = () => {
                 <FormMessage />
               </FormItem>
             )} />
-            <FormField control={form.control} name="email" render={({ field }) => (
-              <FormItem>
-                <FormLabel>Email</FormLabel>
-                <FormControl>
-                  <Input {...field} placeholder="Email" disabled={isPending} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )} />
-            <FormField control={form.control} name="password" render={({ field }) => (
-              <FormItem>
-                <FormLabel>Password</FormLabel>
-                <FormControl>
-                  <Input {...field} placeholder="******" disabled={isPending} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )} />
-            <FormField control={form.control} name="newPassword" render={({ field }) => (
-              <FormItem>
-                <FormLabel>New Password</FormLabel>
-                <FormControl>
-                  <Input {...field} placeholder="******" disabled={isPending} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )} />
+            {!user?.isOAuth && (
+              <>
+                <FormField control={form.control} name="email" render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Email</FormLabel>
+                    <FormControl>
+                      <Input {...field} placeholder="Email" disabled={isPending} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )} />
+                <FormField control={form.control} name="password" render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Password</FormLabel>
+                    <FormControl>
+                      <Input {...field} placeholder="******" disabled={isPending} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )} />
+                <FormField control={form.control} name="newPassword" render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>New Password</FormLabel>
+                    <FormControl>
+                      <Input {...field} placeholder="******" disabled={isPending} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )} />
+              </>
+            )}
             <FormField control={form.control} name="role" render={({ field }) => (
               <FormItem>
                 <FormLabel>Role</FormLabel>
                 <FormControl>
-                  <Select 
-                    disabled={isPending} 
-                    onValueChange={field.onChange} 
+                  <Select
+                    disabled={isPending}
+                    onValueChange={field.onChange}
                     defaultValue={field.value}>
                     <SelectTrigger className="w-[180px]">
                       <SelectValue placeholder="Select a role" />
@@ -131,24 +135,26 @@ const Settings = () => {
                 <FormMessage />
               </FormItem>
             )} />
-            <FormField control={form.control} name="isTwoFactorEnabled" render={({ field }) => (
-              <FormItem className="border rounded-lg p-3 shadow-sm flex items-center justify-between">
-                <div>
-                  <FormLabel>Two Factor Enabled</FormLabel>
-                  <FormDescription>
-                    Enable two factor authentication (2FA) for your account
-                  </FormDescription>
-                </div>
-                <FormControl>
-                  <Switch
-                    disabled={isPending}
-                    checked={field.value}
-                    onCheckedChange={field.onChange}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )} />
+            {!user?.isOAuth && (
+              <FormField control={form.control} name="isTwoFactorEnabled" render={({ field }) => (
+                <FormItem className="border rounded-lg p-3 shadow-sm flex items-center justify-between">
+                  <div>
+                    <FormLabel>Two Factor Enabled</FormLabel>
+                    <FormDescription>
+                      Enable two factor authentication (2FA) for your account
+                    </FormDescription>
+                  </div>
+                  <FormControl>
+                    <Switch
+                      disabled={isPending}
+                      checked={field.value}
+                      onCheckedChange={field.onChange}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )} />
+            )}
             <FormSuccess message={success} />
             <FormError message={error} />
             <Button type="submit">Save</Button>

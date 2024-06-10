@@ -22,7 +22,10 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     async linkAccount({ user }){
       await db.user.update({
         where: { id: user.id },
-        data: { emailVerified: new Date() },
+        data: { 
+          emailVerified: new Date(),
+          isOAuth: true,
+        },
       })
     }
   },
