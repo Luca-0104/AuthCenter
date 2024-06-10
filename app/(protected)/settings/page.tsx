@@ -3,7 +3,7 @@
 import { setting } from "@/actions/settings";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { SettingsSchema } from "@/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useSession } from "next-auth/react";
@@ -22,6 +22,7 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { UserRole } from "@prisma/client";
+import { Switch } from "@/components/ui/switch";
 
 
 const Settings = () => {
@@ -41,6 +42,7 @@ const Settings = () => {
       password: undefined,
       newPassword: undefined,
       role: user?.role || undefined,
+      isTwoFactorEnabled: user?.isTwoFactorEnabled || undefined,
     },
   });
 
@@ -125,6 +127,24 @@ const Settings = () => {
                       <SelectItem value={UserRole.ADMIN}>Admin</SelectItem>
                     </SelectContent>
                   </Select>
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )} />
+            <FormField control={form.control} name="isTwoFactorEnabled" render={({ field }) => (
+              <FormItem className="border rounded-lg p-3 shadow-sm flex items-center justify-between">
+                <div>
+                  <FormLabel>Two Factor Enabled</FormLabel>
+                  <FormDescription>
+                    Enable two factor authentication (2FA) for your account
+                  </FormDescription>
+                </div>
+                <FormControl>
+                  <Switch
+                    disabled={isPending}
+                    checked={field.value}
+                    onCheckedChange={field.onChange}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>

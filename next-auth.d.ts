@@ -28,7 +28,7 @@ declare module "next-auth" {
   interface User {
     id: string
     role: UserRole
-    isTwoFactorEnabled: Boolean
+    isTwoFactorEnabled: boolean
     isOAuth: Boolean
   }
 }
