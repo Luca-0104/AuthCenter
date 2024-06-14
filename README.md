@@ -1,4 +1,7 @@
 ## Auth Center
+<img width="1511" alt="image" src="https://github.com/Luca-0104/AuthCenter/assets/61484990/4e014b67-9728-4881-aa88-a376d8c2eb46">
+
+
 This is my Auth Center developed using **Next.js 14** and **Next-auth v5 (Auth.js)**, which provides the main functionalities of credential login and logging in with **OAuth** providers (currently supported oAuth providers: Google, Github). Other functionalities like Two-factor verification (2FA), Email verification, Access control, User settings, etc are also provided.
 
 In terms of techs, the whole project was built using **Next.js 14** with **TypeScript**, where I used **PostgreSQL** on the cloud as the database and **Prisma** as the ORM modeling tool for the database. The backend server logics were developed using **Next.js server actions** and the front-end was designed with **React.js**, **ShadcnUI**, and **TailWind CSS**. **Next-auth v5 (Auth.js)** was used to develop the functionality of logging in with third-party OAuth providers.
@@ -7,8 +10,23 @@ The project is deployed on **Vercel**, here is a [live demo](https://auth.liuzhe
 
 ## Getting Started
 
-First, run the development server:
+Make sure the node.js version is >= 20.x
 
+Install dependencies:
+```bash
+npm install
+```
+
+Generate database tables based on the Prisma models:
+```bash
+npx prisma generate
+```
+Then sync the database
+```bash
+npx prisma db push
+```
+
+Run the development server:
 ```bash
 npm run dev
 # or
