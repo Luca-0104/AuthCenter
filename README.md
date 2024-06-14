@@ -42,4 +42,19 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 17. Enable/disable two-factor auth in the Settings page
 18. Change user role in Settings page
 
-## Key Technologies
+## Key Technologies Adopted
+1. Next.js 14
+2. TypeScript
+3. Next-auth v5 (Auth.js)
+4. Next.js Server Actions
+5. OAuth Authentications (Google, Github)
+6. PostgreSQL
+7. Prisma
+8. TailWind CSS
+9. Shadcn UI components
+10. Node.js
+11. Email verification with "Resend" platform
+12. Next.js middleware
+13. Next-auth session
+14. Customized hooks (currentUser, useCurrentUser, currentRole, useCurrentRole, etc.)
+15. Vercel for deployment
