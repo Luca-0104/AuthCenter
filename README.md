@@ -23,5 +23,23 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 
 ## Main Features
+1. Login with Credentials Provider
+2. Login with OAuth Provider (currently supported OAuth providers: Google, Github)
+3. Forgot password functionality
+4. Email verification
+5. Two-factor verification (2FA)
+6. Access control with two user roles (Admin & User)
+7. Route access control with next.js middleware
+8. Accessing user session from both server and client side (next-auth session)
+9. Implemented the next-auth callbacks of signIn, session, jwt, etc.
+10. User info page developed with the server component
+11. User info page developed with the client component
+12. Render content for admins using RoleGate component
+13. Protect API Routes for admins only
+14. Protect Server Actions for admins only
+15. Change email with new verification in the Settings page
+16. Change password with old password confirmation in the Settings page
+17. Enable/disable two-factor auth in the Settings page
+18. Change user role in Settings page
 
 ## Key Technologies
