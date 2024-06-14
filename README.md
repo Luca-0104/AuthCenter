@@ -42,23 +42,37 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 ## Main Features
 1. Login with Credentials Provider
-2. Login with OAuth Provider (currently supported OAuth providers: Google, Github)
-3. Forgot password functionality
-4. Email verification
-5. Two-factor verification (2FA)
-6. Access control with two user roles (Admin & User)
-7. Route access control with next.js middleware
-8. Accessing user session from both server and client side (next-auth session)
-9. Implemented the next-auth callbacks of signIn, session, jwt, etc.
-10. User info page developed with the server component
-11. User info page developed with the client component
-12. Render content for admins using RoleGate component
-13. Protect API Routes for admins only
-14. Protect Server Actions for admins only
-15. Change email with new verification in the Settings page
-16. Change password with old password confirmation in the Settings page
-17. Enable/disable two-factor auth in the Settings page
-18. Change user role in Settings page
+   - <img width="390" alt="image" src="https://github.com/Luca-0104/AuthCenter/assets/61484990/49b7b82b-e0c0-4966-a7ac-c3cbc78f2ecb">
+
+3. Login with OAuth Provider (currently supported OAuth providers: Google, Github)
+   - <img width="372" alt="image" src="https://github.com/Luca-0104/AuthCenter/assets/61484990/4309242f-45da-4a5c-b5ec-1c7d5da31383">
+
+5. Forgot password functionality
+   - <img width="417" alt="image" src="https://github.com/Luca-0104/AuthCenter/assets/61484990/ebd4462a-4eef-48de-949c-95d79cbd4fe8">
+   - <img width="509" alt="image" src="https://github.com/Luca-0104/AuthCenter/assets/61484990/69b79057-5842-4bac-90b6-9d68050817c1">
+   - <img width="423" alt="image" src="https://github.com/Luca-0104/AuthCenter/assets/61484990/d81bb5e3-c43b-4bd5-8f9b-34c56dc49060">
+
+7. Email verification
+   - <img width="429" alt="image" src="https://github.com/Luca-0104/AuthCenter/assets/61484990/9d6f91e9-bb10-4c96-b504-8782fa131b0e">
+   - <img width="492" alt="image" src="https://github.com/Luca-0104/AuthCenter/assets/61484990/3c6d30b1-7648-494f-a702-9924fde11885">
+
+9. Two-factor verification (2FA)
+    - <img width="416" alt="image" src="https://github.com/Luca-0104/AuthCenter/assets/61484990/b881840c-1218-42ae-b574-f934660980e5">
+    - <img width="463" alt="image" src="https://github.com/Luca-0104/AuthCenter/assets/61484990/d2d72104-b6fa-4c81-877c-a19d35e2bd2b">
+
+11. Access control with two user roles (Admin & User)
+12. Route access control with next.js middleware
+13. Accessing user session from both server and client side (next-auth session)
+14. Implemented the next-auth callbacks of signIn, session, jwt, etc.
+15. User info page developed with the server component
+16. User info page developed with the client component
+17. Render content for admins using RoleGate component
+18. Protect API Routes for admins only
+19. Protect Server Actions for admins only
+20. Change email with new verification in the Settings page
+21. Change password with old password confirmation in the Settings page
+22. Enable/disable two-factor auth in the Settings page
+23. Change user role in Settings page
 
 ## Key Technologies Adopted
 1. Next.js 14
