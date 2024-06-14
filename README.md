@@ -63,16 +63,27 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 11. Access control with two user roles (Admin & User)
 12. Route access control with next.js middleware
 13. Accessing user session from both server and client side (next-auth session)
-14. Implemented the next-auth callbacks of signIn, session, jwt, etc.
-15. User info page developed with the server component
-16. User info page developed with the client component
-17. Render content for admins using RoleGate component
-18. Protect API Routes for admins only
-19. Protect Server Actions for admins only
-20. Change email with new verification in the Settings page
-21. Change password with old password confirmation in the Settings page
-22. Enable/disable two-factor auth in the Settings page
-23. Change user role in Settings page
+15. Implemented the next-auth callbacks of signIn, session, jwt, etc.
+16. User info page developed with the server component
+    - <img width="636" alt="image" src="https://github.com/Luca-0104/AuthCenter/assets/61484990/f2694c05-4b91-42b6-bf66-25cf728b78f0">
+
+18. User info page developed with the client component
+    - <img width="624" alt="image" src="https://github.com/Luca-0104/AuthCenter/assets/61484990/aba05864-914f-4331-9b4c-cd3be6c45dab">
+
+20. Render content for admins using RoleGate component
+    - <img width="628" alt="image" src="https://github.com/Luca-0104/AuthCenter/assets/61484990/1717f0fa-881b-436c-840a-a0eed270600f">
+
+22. Protect API Routes for admins only
+    - <img width="397" alt="image" src="https://github.com/Luca-0104/AuthCenter/assets/61484990/5f3b968b-ff9b-486e-a162-0ded5849e610">
+
+24. Protect Server Actions for admins only
+    - <img width="389" alt="image" src="https://github.com/Luca-0104/AuthCenter/assets/61484990/f6d2e151-5e4d-4e71-a927-94b1ee4db82e">
+
+26. Change email with new verification in the Settings page
+27. Change password with old password confirmation in the Settings page
+28. Enable/disable two-factor auth in the Settings page
+29. Change the user role in the Settings page
+    - <img width="632" alt="image" src="https://github.com/Luca-0104/AuthCenter/assets/61484990/4c1281e2-176a-479a-8edc-c7c355ae972e">
 
 ## Key Technologies Adopted
 1. Next.js 14
