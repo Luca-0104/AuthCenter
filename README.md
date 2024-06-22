@@ -8,6 +8,25 @@ In terms of techs, the whole project was built using **Next.js 14** with **TypeS
 
 The project is deployed on **Vercel**, here is a [live demo](https://auth.liuzhelucas.com/).
 
+
+## Key Technologies Adopted
+1. Next.js 14
+2. TypeScript
+3. Next-auth v5 (Auth.js)
+4. Next.js Server Actions
+5. OAuth Authentications (Google, Github)
+6. PostgreSQL
+7. Prisma
+8. TailWind CSS
+9. Shadcn UI components
+10. Node.js
+11. Email verification with "Resend" platform
+12. Next.js middleware
+13. Next-auth session
+14. Customized hooks (currentUser, useCurrentUser, currentRole, useCurrentRole, etc.)
+15. Vercel for deployment
+
+
 ## Getting Started
 
 Make sure the node.js version is >= 20.x
@@ -84,20 +103,3 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 28. Enable/disable two-factor auth in the Settings page
 29. Change the user role in the Settings page
     - <img width="632" alt="image" src="https://github.com/Luca-0104/AuthCenter/assets/61484990/4c1281e2-176a-479a-8edc-c7c355ae972e">
-
-## Key Technologies Adopted
-1. Next.js 14
-2. TypeScript
-3. Next-auth v5 (Auth.js)
-4. Next.js Server Actions
-5. OAuth Authentications (Google, Github)
-6. PostgreSQL
-7. Prisma
-8. TailWind CSS
-9. Shadcn UI components
-10. Node.js
-11. Email verification with "Resend" platform
-12. Next.js middleware
-13. Next-auth session
-14. Customized hooks (currentUser, useCurrentUser, currentRole, useCurrentRole, etc.)
-15. Vercel for deployment
